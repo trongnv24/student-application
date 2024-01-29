@@ -47,5 +47,23 @@ public class StudentServiceImpl implements StudentService {
       log.info( " === Finish api getById student , Student id {} : === ", response.getId());
         return response;
     }
+    @Override
+    public StudentResponse update(StudentRequest request, String id){
+        log.info(" === Start api update student === ");
+        log.info(" === Request Body {} :, String id {} : === ",request, id);
+        Optional<StudentEntity> optionalStudent = studentRepository.findById(id);
+        if(!optionalStudent.isPresent()){
+            throw new RuntimeException();
+        }
+        StudentEntity studentEntity = optionalStudent.get();
+        studentEntity.setName(request.getName());
+        studentEntity.setAge(request.getAge());
+        studentEntity.setStudentCode(request.getStudentCode());
+        studentEntity.setHometown(request.getHometown());
+        studentEntity = studentRepository.save(studentEntity);
+        StudentResponse response = convertEntityToStudentResponse(studentEntity);
+        log.info(" === Finish api update student, Student id {} : ", response.getId());
+        return response;
+    }
 
 }

@@ -8,4 +8,6 @@ public interface StudentService {
     StudentResponse create(StudentRequest request);
 
     StudentResponse getById(String id);
+
+    StudentResponse update(StudentRequest request, String id);
 }
