@@ -25,4 +25,14 @@ public class StudentController {
         log.info(" === Finish api create new student, Student id {} : === ", response.getId());
         return response;
     }
+    @GetMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public StudentResponse getById( @PathVariable ("id") String id){
+        log.info(" === Start api getById student === ");
+        log.info(" === String id {} : === ", id);
+        StudentResponse response = service.getById(id);
+        log.info(" === Finish api getById student, Student id {} :", response.getId());
+        return response;
+    }
 }
+

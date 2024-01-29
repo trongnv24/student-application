@@ -8,6 +8,8 @@ import TranningjavaSpring.boot.student.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static TranningjavaSpring.boot.student.service.mapping.StudentMapping.convertDtoToEntity;
 import static TranningjavaSpring.boot.student.service.mapping.StudentMapping.convertEntityToStudentResponse;
 
@@ -32,5 +34,18 @@ public class StudentServiceImpl implements StudentService {
         return response;
     }
 
+    @Override
+    public StudentResponse getById(String id) {
+        log.info(" === Start api getById student === ");
+        log.info(" === String id {} :  === ", id);
+        Optional<StudentEntity> optionalEntity = studentRepository.findById(id);
+        if (!optionalEntity.isPresent()){
+            throw new RuntimeException();
+        }
+      StudentEntity studententity = optionalEntity.get();
+      StudentResponse response = convertEntityToStudentResponse(studententity);
+      log.info( " === Finish api getById student , Student id {} : === ", response.getId());
+        return response;
+    }
 
 }
