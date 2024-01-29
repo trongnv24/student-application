@@ -25,4 +25,31 @@ public class StudentController {
         log.info(" === Finish api create new student, Student id {} : === ", response.getId());
         return response;
     }
+    @GetMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public StudentResponse getById( @PathVariable ("id") String id){
+        log.info(" === Start api getById student === ");
+        log.info(" === String id {} : === ", id);
+        StudentResponse response = service.getById(id);
+        log.info(" === Finish api getById student, Student id {} :", response.getId());
+        return response;
+    }
+    @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public StudentResponse update(@RequestBody StudentRequest request, @PathVariable("id") String id){
+        log.info(" === Start api update student === ");
+        log.info(" === Request Body : {}, String id", request, id);
+        StudentResponse response = service.update(request, id);
+        log.info(" === Finish api update student, Student id", response.getId());
+        return response;
+    }
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteById(@PathVariable("id") String id){
+        log.info(" === Start api delete student === ");
+        log.info(" === String id {} : === ", id);
+        log.info(" === Finish api delete student, Student id {} : ");
+        service.deleteById(id);
+    }
 }
+
