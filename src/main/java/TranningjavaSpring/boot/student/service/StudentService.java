@@ -10,4 +10,6 @@ public interface StudentService {
     StudentResponse getById(String id);
 
     StudentResponse update(StudentRequest request, String id);
+
+    void deleteById(String id);
 }
