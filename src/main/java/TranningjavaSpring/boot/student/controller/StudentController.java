@@ -34,5 +34,14 @@ public class StudentController {
         log.info(" === Finish api getById student, Student id {} :", response.getId());
         return response;
     }
+    @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public StudentResponse update(@RequestBody StudentRequest request, @PathVariable("id") String id){
+        log.info(" === Start api update student === ");
+        log.info(" === Request Body : {}, String id", request, id);
+        StudentResponse response = service.update(request, id);
+        log.info(" === Finish api update student, Student id", response.getId());
+        return response;
+    }
 }
 
