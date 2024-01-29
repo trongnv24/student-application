@@ -8,6 +8,7 @@ import TranningjavaSpring.boot.student.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.swing.undo.CannotRedoException;
 import java.util.Optional;
 
 import static TranningjavaSpring.boot.student.service.mapping.StudentMapping.convertDtoToEntity;
@@ -64,6 +65,17 @@ public class StudentServiceImpl implements StudentService {
         StudentResponse response = convertEntityToStudentResponse(studentEntity);
         log.info(" === Finish api update student, Student id {} : ", response.getId());
         return response;
+    }
+    @Override
+    public void deleteById(String id){
+        log.info(" === Start api delete student ==== ");
+        log.info(" === String id {} : === ", id);
+        Optional<StudentEntity>optionalStudent = studentRepository.findById(id);
+        if(!optionalStudent.isPresent()){
+            throw new RuntimeException();
+        }
+        log.info(" === Finish api delete student, Student id {} :  ");
+        studentRepository.deleteById(id);
     }
 
 }
