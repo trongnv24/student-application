@@ -12,4 +12,6 @@ public interface StudentService {
     StudentResponse update(StudentRequest request, String id);
 
     void deleteById(String id);
+
+    StudentResponse searchByName(String name);
 }

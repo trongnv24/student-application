@@ -1,9 +1,5 @@
 package TranningjavaSpring.boot.student.dto.Request;
 
-import jakarta.persistence.PrePersist;
-
-import java.util.Objects;
-import java.util.UUID;
 
 public class StudentRequest {
     private String id;
