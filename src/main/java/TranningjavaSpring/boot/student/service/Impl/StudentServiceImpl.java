@@ -3,6 +3,8 @@ package TranningjavaSpring.boot.student.service.Impl;
 import TranningjavaSpring.boot.student.dto.Request.StudentRequest;
 import TranningjavaSpring.boot.student.dto.Response.StudentResponse;
 import TranningjavaSpring.boot.student.entity.StudentEntity;
+import TranningjavaSpring.boot.student.exception.StudentNotFoundException;
+import TranningjavaSpring.boot.student.exception.StudentServiceException;
 import TranningjavaSpring.boot.student.repository.StudentRepository;
 import TranningjavaSpring.boot.student.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
@@ -39,8 +41,8 @@ public class StudentServiceImpl implements StudentService {
         log.info(" === Start api getById student === ");
         log.info(" === String id {} :  === ", id);
         Optional<StudentEntity> optionalEntity = studentRepository.findById(id);
-        if (!optionalEntity.isPresent()){
-            throw new RuntimeException();
+        if (optionalEntity.isPresent()) {
+            throw new StudentNotFoundException();
         }
       StudentEntity studententity = optionalEntity.get();
       StudentResponse response = convertEntityToStudentResponse(studententity);
