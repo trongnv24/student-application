@@ -51,5 +51,14 @@ public class StudentController {
         log.info(" === Finish api delete student, Student id {} : ");
         service.deleteById(id);
     }
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
+    public StudentResponse searchByName(@RequestParam String name){
+        log.info(" === Start api searchByName student === ");
+        log.info(" === String name {} : === ", name);
+        StudentResponse response = service.searchByName(name);
+        log.info(" === Finish api search student, Student name {} : === ", name);
+        return response;
+    }
 }
 

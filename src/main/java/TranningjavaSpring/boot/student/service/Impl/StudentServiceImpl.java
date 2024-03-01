@@ -74,10 +74,25 @@ public class StudentServiceImpl implements StudentService {
         log.info(" === String id {} : === ", id);
         Optional<StudentEntity>optionalStudent = studentRepository.findById(id);
         if(!optionalStudent.isPresent()){
-            throw new RuntimeException();
+            throw new RuntimeException()    ;
         }
         log.info(" === Finish api delete student, Student id {} :  ");
         studentRepository.deleteById(id);
+    }
+
+    @Override
+    public StudentResponse searchByName (String name) {
+        log.info(" === Start api searchByName student === ");
+        log.info(" === String name {} : === ", name);
+        Optional<StudentEntity> optionalStudent = studentRepository.findByName(name);
+        if (!optionalStudent.isPresent()){
+            throw new RuntimeException();
+        }
+        StudentEntity studentEntity = optionalStudent.get();
+        studentEntity = studentRepository.save(studentEntity);
+        StudentResponse response = convertEntityToStudentResponse(studentEntity);
+        log.info(" === Finish api searchByName, Student name {} : === ", name);
+        return response;
     }
 
 }
