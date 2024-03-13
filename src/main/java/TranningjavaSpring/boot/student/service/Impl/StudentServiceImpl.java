@@ -92,4 +92,20 @@ public class StudentServiceImpl implements StudentService {
         return response;
     }
 
+    @Override
+    public CourseResponse update(CourseRequest request, String id) {
+        log.info(" === Start api update course === ");
+        log.info(" === Request Body : {}, String id : {} ===", request, id);
+        Optional<CourseEntity>optionalCourse = courseRepository.findById(id);
+        if (!optionalCourse.isPresent()){
+            throw new RuntimeException();
+        }
+        CourseEntity entity = optionalCourse.get();
+        entity.setTitle(request.getTitle());
+        entity = courseRepository.save(entity);
+        CourseResponse response = covertCourseEntityToCourseResponse(entity);
+        log.info(" === Finish api update course, Course Id : {} === ");
+        return response;
+    }
+
 }

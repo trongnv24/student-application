@@ -15,4 +15,5 @@ public interface StudentService {
 
     void deleteById(String id);
     CourseResponse create(CourseRequest request);
+    CourseResponse update(CourseRequest request, String id);
 }

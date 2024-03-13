@@ -25,4 +25,13 @@ public class CourseController {
         log.info(" === Finish api create new course,Course Id : {} === ", response.getId());
         return response;
     }
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CourseResponse update(@RequestBody CourseRequest request,@PathVariable ("id") String id){
+        log.info(" === Start api getById course === ");
+        log.info(" === Request Body :{}, String id : {} === ", id, request);
+        CourseResponse response = service.update(request, id);
+        log.info(" === Finish api update course, Course Id : {} ===", response.getId());
+        return response;
+    }
 }
