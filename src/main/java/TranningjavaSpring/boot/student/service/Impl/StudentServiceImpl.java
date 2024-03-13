@@ -1,27 +1,30 @@
 package TranningjavaSpring.boot.student.service.Impl;
 
+import TranningjavaSpring.boot.student.dto.Request.CourseRequest;
 import TranningjavaSpring.boot.student.dto.Request.StudentRequest;
+import TranningjavaSpring.boot.student.dto.Response.CourseResponse;
 import TranningjavaSpring.boot.student.dto.Response.StudentResponse;
+import TranningjavaSpring.boot.student.entity.CourseEntity;
 import TranningjavaSpring.boot.student.entity.StudentEntity;
+import TranningjavaSpring.boot.student.repository.CourseRepository;
 import TranningjavaSpring.boot.student.repository.StudentRepository;
 import TranningjavaSpring.boot.student.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import javax.swing.undo.CannotRedoException;
 import java.util.Optional;
 
-import static TranningjavaSpring.boot.student.service.mapping.StudentMapping.convertDtoToEntity;
-import static TranningjavaSpring.boot.student.service.mapping.StudentMapping.convertEntityToStudentResponse;
+import static TranningjavaSpring.boot.student.service.mapping.StudentMapping.*;
 
 @Service
 @Slf4j
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
 
-    public StudentServiceImpl(StudentRepository studentRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository) {
         this.studentRepository = studentRepository;
+        this.courseRepository = courseRepository;
     }
 
     @Override
@@ -76,6 +79,17 @@ public class StudentServiceImpl implements StudentService {
         }
         log.info(" === Finish api delete student, Student id {} :  ");
         studentRepository.deleteById(id);
+    }
+
+    @Override
+    public CourseResponse create(CourseRequest request) {
+        log.info(" === Start api create new course === ");
+        log.info(" === Request Body : {} === ", request);
+        CourseEntity entity = convertDtoToCourseEntity(request);
+        entity = courseRepository.save(entity);
+        CourseResponse response = covertCourseEntityToCourseResponse(entity);
+        log.info(" === Finish api create new course, Course Id {} : === ", response.getId());
+        return response;
     }
 
 }
